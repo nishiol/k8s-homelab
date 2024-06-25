@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      initContainers:
+        - name: create-empty-file
+          image: alpine
+          command: [ "touch", "/opt/ts/log" ]
+          volumeMounts:
+            - name: logs
+              mountPath: /opt/ts
+      containers:
+        - name: torrserver
+          image: "ghcr.io/yourok/torrserver:{{ .Chart.AppVersion }}"
+          ports:
+            - containerPort: 8090
+              protocol: TCP
+            - containerPort: 56335
+              protocol: UDP
+          env:
+            - name: TS_HTTPAUTH
+              value: "1"
+          volumeMounts:
+            - name: volume
+              mountPath: /opt/ts
+            - name: accs
+              mountPath: /opt/ts/config/accs.db
+              subPath: accs.db
+              readOnly: true
+            - name: logs
+              mountPath: /opt/ts/log
+              subPath: log
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
+        - name: accs
+          secret:
+            secretName: {{ .Release.Name }}
+        - name: logs
+          emptyDir: { }

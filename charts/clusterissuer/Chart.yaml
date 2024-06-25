@@ -1,0 +1,6 @@
+apiVersion: v2
+name: clusterissuer
+description: cert-manager cluster issuers for prod and staging Let's Encrypt
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
