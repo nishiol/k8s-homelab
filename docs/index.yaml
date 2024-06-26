@@ -11,6 +11,28 @@ entries:
     urls:
     - clusterissuer-0.1.0.tgz
     version: 0.1.0
+  gluetun:
+  - apiVersion: v2
+    appVersion: v3.38.0
+    created: "2024-06-26T13:35:58.844634+03:00"
+    description: Lightweight swiss-knife-like VPN client to multiple VPN service providers
+    digest: 1ea853f9787da9d8db3a2029b47a891dbc9da5bd67cb05797dc9ed370198e2b8
+    name: gluetun
+    type: application
+    urls:
+    - gluetun-0.1.0.tgz
+    version: 0.1.0
+  jackett:
+  - apiVersion: v2
+    appVersion: 0.22.207
+    created: "2024-06-26T13:35:58.847675+03:00"
+    description: API Support for your favorite torrent trackers
+    digest: 99e89ab0243617dbe8fc69a5940c4f17a9abcb13a844efeb58492d79e14dbded
+    name: jackett
+    type: application
+    urls:
+    - jackett-0.1.0.tgz
+    version: 0.1.0
   torrserver:
   - apiVersion: v2
     appVersion: MatriX.133t
@@ -22,4 +44,4 @@ entries:
     urls:
     - torrserver-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-25T19:14:53.712779+03:00"
+generated: "2024-06-26T13:35:58.841228+03:00"

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: gluetun
+          image: "qmcgaw/gluetun:{{ .Chart.AppVersion }}"
+          ports:
+            - containerPort: 8888
+              protocol: TCP
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          env:
+            - name: HTTPPROXY
+              value: "on"
+            - name: VPN_SERVICE_PROVIDER
+              value: "custom"
+            - name: VPN_TYPE
+              value: "wireguard"
+            - name: VPN_ENDPOINT_IP
+              value: "{{ .Values.wireguard.endpoint }}"
+            - name: VPN_ENDPOINT_PORT
+              value: "{{ .Values.wireguard.port }}"
+            - name: DNS_KEEP_NAMESERVER
+              value: "on"
+            - name: FIREWALL_OUTBOUND_SUBNETS
+              value: "10.43.0.0/16,2001:cafe:43::/112" # https://docs.k3s.io/cli/server#networking
+            - name: WIREGUARD_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: privateKey
+            - name: WIREGUARD_ADDRESSES
+              value: "{{ .Values.wireguard.addresses }}"
+            - name: WIREGUARD_PUBLIC_KEY
+              value: "{{ .Values.wireguard.publicKey }}"
+            - name: WIREGUARD_MTU
+              value: "{{ .Values.wireguard.mtu }}"
+            - name: WIREGUARD_ALLOWED_IPS
+              value: "{{ .Values.wireguard.allowedIps }}"
