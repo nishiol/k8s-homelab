@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard
+  namespace: kube-system
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
+    traefik.ingress.kubernetes.io/router.middlewares: {{ .Release.Namespace }}-basic-auth@kubernetescrd
+spec:
+  rules:
+    - host: {{ .Values.dashboardHostName }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: traefik-dashboard
+                port:
+                  number: 9000
+  tls:
+    - hosts:
+        - {{ .Values.dashboardHostName }}
+      secretName: traefik-dashboard-cert
