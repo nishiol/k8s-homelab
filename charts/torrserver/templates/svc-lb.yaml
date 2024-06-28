@@ -3,14 +3,16 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-lb
   namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
 spec:
   type: LoadBalancer
   ports:
-    - port: 56335
+    - port: {{ .Values.incomingConnectionsPort }}
       targetPort: 56335
       protocol: UDP
       name: udp
-    - port: 56335
+    - port: {{ .Values.incomingConnectionsPort }}
       targetPort: 56335
       protocol: TCP
       name: tcp

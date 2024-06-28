@@ -5,6 +5,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
+  labels:
+    app: {{ .Release.Name }}
 spec:
   rules:
     - host: {{ .Values.hostName }}

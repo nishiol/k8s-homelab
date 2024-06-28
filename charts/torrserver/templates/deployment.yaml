@@ -32,6 +32,8 @@ spec:
               protocol: TCP
             - containerPort: 56335
               protocol: UDP
+            - containerPort: 56335
+              protocol: TCP
           env:
             - name: TS_HTTPAUTH
               value: "1"

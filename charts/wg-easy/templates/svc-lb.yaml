@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-lb
   namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
 spec:
   type: LoadBalancer
   ports:

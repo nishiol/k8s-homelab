@@ -2,3 +2,4 @@ login: admin
 password: admin
 hostName: torrserver.example.com
 certIssuer: staging-issuer
+incomingConnectionsPort: 56335
