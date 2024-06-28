@@ -1,0 +1,17 @@
+ingress:
+  enabled: true
+  host: <changeme>
+  tls: true
+  tlsSecret: longhorn
+  annotations:
+    cert-manager.io/cluster-issuer: prod-issuer
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-extra-basic-auth@kubernetescrd
+
+longhornUI:
+  replicas: 1
+
+persistence:
+  defaultClassReplicaCount: 1
+  defaultDataLocality: best-effort
+  reclaimPolicy: Delete
+  removeSnapshotsDuringFilesystemTrim: enabled

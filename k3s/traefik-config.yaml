@@ -1,0 +1,17 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    nodeSelector:
+      kubernetes.io/hostname: <changeme>
+    ports:
+      web:
+        redirectTo:
+          port: websecure
+      websecure:
+        http3:
+          enabled: true
+          advertisedPort: 443
