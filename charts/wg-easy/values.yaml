@@ -1,0 +1,3 @@
+hostName: wg.example.com
+certIssuer: staging-issuer
+password: admin

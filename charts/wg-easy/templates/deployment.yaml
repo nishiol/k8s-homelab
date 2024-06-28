@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: wg-easy
+          image: "ghcr.io/wg-easy/wg-easy:{{ .Chart.AppVersion }}"
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+                - NET_RAW
+          ports:
+            - containerPort: 51820
+              protocol: UDP
+            - containerPort: 51821
+              protocol: TCP
+          env:
+            - name: WG_HOST
+              value: "{{ .Values.hostName }}"
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: password
+          volumeMounts:
+            - name: config
+              mountPath: /etc/wireguard
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
