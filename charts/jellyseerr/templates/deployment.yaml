@@ -19,22 +19,18 @@ spec:
     spec:
       nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
       containers:
-        - name: jackett
-          image: "linuxserver/jackett:{{ .Chart.AppVersion }}"
+        - name: jellyseerr
+          image: "fallenbagel/jellyseerr:{{ .Chart.AppVersion }}"
           ports:
-            - containerPort: 9117
+            - containerPort: 5055
               protocol: TCP
-          env:
-            - name: AUTO_UPDATE
-              value: "true"
           volumeMounts:
             - name: config
-              mountPath: /config
-            - name: blackhole
-              mountPath: /downloads
+              mountPath: /app/config
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-proxy
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}
-        - name: blackhole
-          emptyDir: { }
+            claimName: {{ .Release.Name }}-config

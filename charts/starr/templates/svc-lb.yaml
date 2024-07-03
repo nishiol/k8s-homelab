@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-lb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  type: LoadBalancer
+  ipFamilyPolicy: PreferDualStack
+  ports:
+    - port: {{ .Values.qbittorrent.torrentingPort }}
+      targetPort: 6881
+      protocol: UDP
+      name: qbittorrent-udp
+    - port: {{ .Values.qbittorrent.torrentingPort }}
+      targetPort: 6881
+      protocol: TCP
+      name: qbittorrent-tcp
+    - port: 7359
+      targetPort: 7359
+      protocol: UDP
+      name: jellyfin-discovery
+  selector:
+    app: {{ .Release.Name }}

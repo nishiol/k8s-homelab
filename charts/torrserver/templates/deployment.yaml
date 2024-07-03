@@ -17,6 +17,7 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
+      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
       initContainers:
         - name: create-empty-file
           image: alpine

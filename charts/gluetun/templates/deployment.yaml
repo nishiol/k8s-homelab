@@ -17,6 +17,7 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
+      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
       containers:
         - name: gluetun
           image: "qmcgaw/gluetun:{{ .Chart.AppVersion }}"
@@ -38,8 +39,8 @@ spec:
               value: "{{ .Values.wireguard.endpoint }}"
             - name: VPN_ENDPOINT_PORT
               value: "{{ .Values.wireguard.port }}"
-            - name: DNS_KEEP_NAMESERVER
-              value: "on"
+            - name: BLOCK_MALICIOUS
+              value: "off"
             - name: FIREWALL_OUTBOUND_SUBNETS
               value: "10.43.0.0/16,2001:cafe:43::/112" # https://docs.k3s.io/cli/server#networking
             - name: WIREGUARD_PRIVATE_KEY

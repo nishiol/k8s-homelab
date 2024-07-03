@@ -17,6 +17,7 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
+      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
       containers:
         - name: wg-easy
           image: "ghcr.io/wg-easy/wg-easy:{{ .Chart.AppVersion }}"

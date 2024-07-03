@@ -1,0 +1,5 @@
+hostName: qbittorrent.example.com
+certIssuer: staging-issuer
+torrentingPort: 6881
+pvcName: media
+nodeSelector: {}

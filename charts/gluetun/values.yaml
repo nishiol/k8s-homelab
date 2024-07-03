@@ -6,3 +6,4 @@ wireguard:
   publicKey: publicKey
   addresses: 192.168.0.1/32
   allowedIps: 0.0.0.0/0
+nodeSelector: {}

@@ -1,0 +1,21 @@
+qbittorrent:
+  hostName: qbittorrent.example.com
+  imageTag: "4.6.5"
+  torrentingPort: 6881
+radarr:
+  hostName: radarr.example.com
+  imageTag: "5.7.0"
+sonarr:
+  hostName: sonarr.example.com
+  imageTag: "4.0.6"
+jellyfin:
+  hostName: jellyfin.example.com
+  imageTag: "10.9.7"
+recyclarr:
+  imageTag: "7"
+certIssuer: staging-issuer
+mediaSize: 200Gi
+proxyUrl: "http://example.com:8080"
+noProxy: ".svc.cluster.local,localhost,127.0.0.1"
+nodeSelector:
+  gpu: intel

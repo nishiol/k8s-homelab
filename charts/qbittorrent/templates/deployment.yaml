@@ -19,22 +19,25 @@ spec:
     spec:
       nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
       containers:
-        - name: jackett
-          image: "linuxserver/jackett:{{ .Chart.AppVersion }}"
+        - name: qbittorrent
+          image: "linuxserver/qbittorrent:{{ .Chart.AppVersion }}"
           ports:
-            - containerPort: 9117
+            - containerPort: 8080
               protocol: TCP
-          env:
-            - name: AUTO_UPDATE
-              value: "true"
+            - containerPort: 6881
+              protocol: UDP
+            - containerPort: 6881
+              protocol: TCP
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: blackhole
+            - name: downloads
               mountPath: /downloads
+              subPath: torrents
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}
-        - name: blackhole
-          emptyDir: { }
+            claimName: {{ .Release.Name }}-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvcName }}

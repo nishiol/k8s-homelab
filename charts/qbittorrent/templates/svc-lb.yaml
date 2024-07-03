@@ -9,8 +9,13 @@ spec:
   type: LoadBalancer
   ipFamilyPolicy: PreferDualStack
   ports:
-    - port: 51820
-      targetPort: 51820
+    - port: {{ .Values.torrentingPort }}
+      targetPort: 6881
       protocol: UDP
+      name: udp
+    - port: {{ .Values.torrentingPort }}
+      targetPort: 6881
+      protocol: TCP
+      name: tcp
   selector:
     app: {{ .Release.Name }}

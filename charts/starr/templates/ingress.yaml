@@ -1,0 +1,58 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
+spec:
+  rules:
+    - host: {{ .Values.qbittorrent.hostName }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}
+                port:
+                  number: 8080
+    - host: {{ .Values.radarr.hostName }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}
+                port:
+                  number: 7878
+    - host: {{ .Values.sonarr.hostName }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}
+                port:
+                  number: 8989
+    - host: {{ .Values.jellyfin.hostName }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}
+                port:
+                  number: 8096
+  tls:
+    - hosts:
+        - {{ .Values.qbittorrent.hostName }}
+        - {{ .Values.radarr.hostName }}
+        - {{ .Values.sonarr.hostName }}
+        - {{ .Values.jellyfin.hostName }}
+      secretName: {{ .Release.Name }}
