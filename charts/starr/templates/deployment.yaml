@@ -18,8 +18,6 @@ spec:
         app: {{ .Release.Name }}
     spec:
       nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
-      securityContext:
-        fsGroup: 1000
       containers:
         - name: qbittorrent
           image: "linuxserver/qbittorrent:{{ .Values.qbittorrent.imageTag }}"
@@ -41,12 +39,6 @@ spec:
               subPath: qbittorrent
             - name: media
               mountPath: /data
-        - name: recyclarr
-          image: "recyclarr/recyclarr:{{ .Values.recyclarr.imageTag }}"
-          volumeMounts:
-            - name: config
-              mountPath: /config
-              subPath: recyclarr
         - name: sonarr
           image: "linuxserver/sonarr:{{ .Values.sonarr.imageTag }}"
           env:
@@ -123,4 +115,4 @@ spec:
         - name: transcodes
           emptyDir:
             medium: Memory
-            sizeLimit: 512Mi
+            sizeLimit: {{ .Values.jellyfin.transcodeCacheSize }}

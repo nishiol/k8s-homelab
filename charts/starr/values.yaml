@@ -11,8 +11,7 @@ sonarr:
 jellyfin:
   hostName: jellyfin.example.com
   imageTag: "10.9.7"
-recyclarr:
-  imageTag: "7"
+  transcodeCacheSize: 2Gi
 certIssuer: staging-issuer
 mediaSize: 200Gi
 proxyUrl: "http://example.com:8080"
