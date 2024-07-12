@@ -18,3 +18,5 @@ proxyUrl: "http://example.com:8080"
 noProxy: ".svc.cluster.local,localhost,127.0.0.1"
 nodeSelector:
   gpu: intel
+additionalVolumes: []
+additionalVolumeMounts: []

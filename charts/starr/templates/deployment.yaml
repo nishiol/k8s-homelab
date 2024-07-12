@@ -39,6 +39,9 @@ spec:
               subPath: qbittorrent
             - name: media
               mountPath: /data
+            {{- if .Values.additionalVolumeMounts }}
+              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+            {{- end }}
         - name: sonarr
           image: "linuxserver/sonarr:{{ .Values.sonarr.imageTag }}"
           env:
@@ -55,6 +58,9 @@ spec:
               subPath: sonarr
             - name: media
               mountPath: /data
+            {{- if .Values.additionalVolumeMounts }}
+              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+            {{- end }}
         - name: radarr
           image: "linuxserver/radarr:{{ .Values.radarr.imageTag }}"
           env:
@@ -71,6 +77,9 @@ spec:
               subPath: radarr
             - name: media
               mountPath: /data
+            {{- if .Values.additionalVolumeMounts }}
+              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+            {{- end }}
         - name: jellyfin
           image: "linuxserver/jellyfin:{{ .Values.jellyfin.imageTag }}"
           env:
@@ -100,6 +109,9 @@ spec:
               mountPath: /dev/dri
             - name: transcodes
               mountPath: /config/cache/transcodes
+            {{- if .Values.additionalVolumeMounts }}
+              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+            {{- end }}
           securityContext:
             privileged: true
       volumes:
@@ -116,3 +128,6 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: {{ .Values.jellyfin.transcodeCacheSize }}
+        {{- if .Values.additionalVolumeMounts }}
+          {{- toYaml .Values.additionalVolumes | nindent 8 }}
+        {{- end }}
