@@ -4,13 +4,13 @@ qbittorrent:
   torrentingPort: 6881
 radarr:
   hostName: radarr.example.com
-  imageTag: "5.7.0"
+  imageTag: "5.8.3"
 sonarr:
   hostName: sonarr.example.com
-  imageTag: "4.0.6"
+  imageTag: "4.0.8"
 jellyfin:
   hostName: jellyfin.example.com
-  imageTag: "10.9.7"
+  imageTag: "10.9.8"
   transcodeCacheSize: 2Gi
 certIssuer: staging-issuer
 mediaSize: 200Gi
