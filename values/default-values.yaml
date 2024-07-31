@@ -1,0 +1,7 @@
+domain: example.com
+certIssuer: staging-issuer
+adminUser: admin
+adminPassword: admin
+alertManager:
+  telegramBotToken: token
+  telegramChatId: -100

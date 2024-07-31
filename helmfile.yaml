@@ -1,0 +1,132 @@
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+  - name: longhorn
+    url: https://charts.longhorn.io
+  - name: jetstack
+    url: https://charts.jetstack.io
+values:
+  - values/default-values.yaml
+  - values/values.yaml
+releases:
+  - name: cert-manager
+    namespace: cert-manager
+    createNamespace: true
+    chart: jetstack/cert-manager
+  - name: clusterissuer
+    namespace: default
+    chart: charts/clusterissuer
+    missingFileHandler: Warn
+    values:
+      - values/clusterissuer-values.yaml
+  - name: traefik-extra
+    namespace: traefik-extra
+    createNamespace: true
+    chart: charts/traefik-extra
+    missingFileHandler: Warn
+    values:
+      - values/traefik-extra-default-values.yaml.gotmpl
+      - values/traefik-extra-values.yaml
+  - name: longhorn
+    namespace: longhorn-system
+    createNamespace: true
+    chart: longhorn/longhorn
+    missingFileHandler: Warn
+    values:
+      - values/longhorn-default-values.yaml.gotmpl
+      - values/longhorn-values.yaml
+  - name: loki
+    namespace: monitoring
+    createNamespace: true
+    chart: grafana/loki
+    missingFileHandler: Warn
+    values:
+      - values/loki-default-values.yaml.gotmpl
+      - values/loki-values.yaml
+  - name: promtail
+    namespace: monitoring
+    createNamespace: true
+    chart: grafana/promtail
+    missingFileHandler: Warn
+    values:
+      - values/promtail-default-values.yaml.gotmpl
+      - values/promtail-values.yaml
+  - name: kube-prometheus-stack
+    namespace: monitoring
+    createNamespace: true
+    chart: prometheus-community/kube-prometheus-stack
+    missingFileHandler: Warn
+    values:
+      - values/kube-prometheus-stack-default-values.yaml.gotmpl
+      - values/kube-prometheus-stack-values.yaml
+  - name: starr
+    namespace: starr
+    createNamespace: true
+    chart: charts/starr
+    missingFileHandler: Warn
+    values:
+      - values/starr-default-values.yaml.gotmpl
+      - values/starr-values.yaml
+  - name: flaresolverr
+    namespace: flaresolverr
+    createNamespace: true
+    chart: charts/flaresolverr
+    missingFileHandler: Warn
+    values:
+      - values/flaresolverr-values.yaml
+  - name: gluetun
+    namespace: gluetun
+    createNamespace: true
+    chart: charts/gluetun
+    missingFileHandler: Warn
+    values:
+      - values/gluetun-values.yaml
+  - name: jackett
+    namespace: jackett
+    createNamespace: true
+    chart: charts/jackett
+    missingFileHandler: Warn
+    values:
+      - values/jackett-default-values.yaml.gotmpl
+      - values/jackett-values.yaml
+  - name: jellyseerr
+    namespace: jellyseerr
+    createNamespace: true
+    chart: charts/jellyseerr
+    missingFileHandler: Warn
+    values:
+      - values/jellyseerr-default-values.yaml.gotmpl
+      - values/jellyseerr-values.yaml
+  - name: recyclarr
+    namespace: recyclarr
+    createNamespace: true
+    chart: charts/recyclarr
+    missingFileHandler: Warn
+    values:
+      - values/recyclarr-values.yaml
+  - name: torrserver
+    namespace: torrserver-earth
+    createNamespace: true
+    chart: charts/torrserver
+    missingFileHandler: Warn
+    values:
+      - values/torrserver-earth-default-values.yaml.gotmpl
+      - values/torrserver-earth-values.yaml
+  - name: torrserver
+    namespace: torrserver-moon
+    createNamespace: true
+    chart: charts/torrserver
+    missingFileHandler: Warn
+    values:
+      - values/torrserver-moon-default-values.yaml.gotmpl
+      - values/torrserver-moon-values.yaml
+  - name: wg-easy
+    namespace: wg-easy
+    createNamespace: true
+    chart: charts/wg-easy
+    missingFileHandler: Warn
+    values:
+      - values/wg-easy-default-values.yaml.gotmpl
+      - values/wg-easy-values.yaml

@@ -1,0 +1,81 @@
+alertmanager:
+  config:
+    route:
+      receiver: 'telegram'
+      routes:
+        - receiver: 'telegram'
+          matchers:
+            - alertname = "Watchdog"
+    receivers:
+      - name: 'telegram'
+        telegram_configs:
+          - bot_token: {{ .Values.alertManager.telegramBotToken }}
+            chat_id: {{ .Values.alertManager.telegramChatId }}
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-extra-basic-auth@kubernetescrd
+    hosts:
+      - alertmanager.{{ .Values.domain }}
+    tls:
+      - secretName: alertmanager-tls
+        hosts:
+          - alertmanager.{{ .Values.domain }}
+  alertmanagerSpec:
+    externalUrl: 'https://alertmanager.{{ .Values.domain }}'
+grafana:
+  enabled: true
+  adminPassword: {{ .Values.adminPassword }}
+  defaultDashboardsTimezone: browser
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
+    hosts:
+      - grafana.{{ .Values.domain }}
+    tls:
+      - secretName: grafana-tls
+        hosts:
+          - grafana.{{ .Values.domain }}
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      url: http://loki:3100
+      access: proxy
+      jsonData:
+        httpHeaderName1: X-Scope-OrgID
+      secureJsonData:
+        httpHeaderValue1: {{ .Values.adminUser }}
+  persistence:
+    enabled: true
+    size: 1Gi
+prometheus:
+  ingress:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-extra-basic-auth@kubernetescrd
+      cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
+    hosts:
+      - prometheus.{{ .Values.domain }}
+    tls:
+      - secretName: prometheus-tls
+        hosts:
+          - prometheus.{{ .Values.domain }}
+  prometheusSpec:
+    externalUrl: 'https://prometheus.{{ .Values.domain }}'
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          resources:
+            requests:
+              storage: 10Gi
+# https://github.com/k3s-io/k3s/issues/3619
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeControllerManager:
+  enabled: false

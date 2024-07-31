@@ -1,10 +1,10 @@
 ingress:
   enabled: true
-  host: <changeme>
+  host: longhorn.{{ .Values.domain }}
   tls: true
   tlsSecret: longhorn
   annotations:
-    cert-manager.io/cluster-issuer: prod-issuer
+    cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
     traefik.ingress.kubernetes.io/router.middlewares: traefik-extra-basic-auth@kubernetescrd
 
 longhornUI:

@@ -1,0 +1,11 @@
+qbittorrent:
+  hostName: qbittorrent.{{ .Values.domain }}
+  torrentingPort: 6881
+radarr:
+  hostName: radarr.{{ .Values.domain }}
+sonarr:
+  hostName: sonarr.{{ .Values.domain }}
+jellyfin:
+  hostName: jellyfin.{{ .Values.domain }}
+certIssuer: {{ .Values.certIssuer }}
+proxyUrl: "http://gluetun.gluetun:8888"
