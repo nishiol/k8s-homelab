@@ -18,6 +18,7 @@ releases:
   - name: clusterissuer
     namespace: default
     chart: charts/clusterissuer
+    needs: [cert-manager/cert-manager]
     missingFileHandler: Warn
     values:
       - values/clusterissuer-values.yaml
@@ -33,6 +34,7 @@ releases:
     namespace: longhorn-system
     createNamespace: true
     chart: longhorn/longhorn
+    needs: [default/clusterissuer, traefik-extra/traefik-extra]
     missingFileHandler: Warn
     values:
       - values/longhorn-default-values.yaml.gotmpl
@@ -41,6 +43,7 @@ releases:
     namespace: monitoring
     createNamespace: true
     chart: grafana/loki
+    needs: [longhorn-system/longhorn]
     missingFileHandler: Warn
     values:
       - values/loki-default-values.yaml.gotmpl
@@ -49,6 +52,7 @@ releases:
     namespace: monitoring
     createNamespace: true
     chart: grafana/promtail
+    needs: [monitoring/loki]
     missingFileHandler: Warn
     values:
       - values/promtail-default-values.yaml.gotmpl
@@ -57,18 +61,11 @@ releases:
     namespace: monitoring
     createNamespace: true
     chart: prometheus-community/kube-prometheus-stack
+    needs: [default/clusterissuer, longhorn-system/longhorn, monitoring/loki]
     missingFileHandler: Warn
     values:
       - values/kube-prometheus-stack-default-values.yaml.gotmpl
       - values/kube-prometheus-stack-values.yaml
-  - name: starr
-    namespace: starr
-    createNamespace: true
-    chart: charts/starr
-    missingFileHandler: Warn
-    values:
-      - values/starr-default-values.yaml.gotmpl
-      - values/starr-values.yaml
   - name: flaresolverr
     namespace: flaresolverr
     createNamespace: true
@@ -87,14 +84,25 @@ releases:
     namespace: jackett
     createNamespace: true
     chart: charts/jackett
+    needs: [default/clusterissuer, longhorn-system/longhorn, gluetun/gluetun, flaresolverr/flaresolverr]
     missingFileHandler: Warn
     values:
       - values/jackett-default-values.yaml.gotmpl
       - values/jackett-values.yaml
+  - name: starr
+    namespace: starr
+    createNamespace: true
+    chart: charts/starr
+    needs: [default/clusterissuer, longhorn-system/longhorn, gluetun/gluetun, jackett/jackett]
+    missingFileHandler: Warn
+    values:
+      - values/starr-default-values.yaml.gotmpl
+      - values/starr-values.yaml
   - name: jellyseerr
     namespace: jellyseerr
     createNamespace: true
     chart: charts/jellyseerr
+    needs: [default/clusterissuer, longhorn-system/longhorn, gluetun/gluetun, starr/starr]
     missingFileHandler: Warn
     values:
       - values/jellyseerr-default-values.yaml.gotmpl
@@ -103,6 +111,7 @@ releases:
     namespace: recyclarr
     createNamespace: true
     chart: charts/recyclarr
+    needs: [longhorn-system/longhorn, starr/starr]
     missingFileHandler: Warn
     values:
       - values/recyclarr-values.yaml
@@ -110,6 +119,7 @@ releases:
     namespace: torrserver-earth
     createNamespace: true
     chart: charts/torrserver
+    needs: [default/clusterissuer, longhorn-system/longhorn]
     missingFileHandler: Warn
     values:
       - values/torrserver-earth-default-values.yaml.gotmpl
@@ -118,6 +128,7 @@ releases:
     namespace: torrserver-moon
     createNamespace: true
     chart: charts/torrserver
+    needs: [default/clusterissuer, longhorn-system/longhorn]
     missingFileHandler: Warn
     values:
       - values/torrserver-moon-default-values.yaml.gotmpl
@@ -126,6 +137,7 @@ releases:
     namespace: wg-easy
     createNamespace: true
     chart: charts/wg-easy
+    needs: [default/clusterissuer, longhorn-system/longhorn]
     missingFileHandler: Warn
     values:
       - values/wg-easy-default-values.yaml.gotmpl
