@@ -1,1 +1,7 @@
+radarr:
+  baseUrl: http://radarr.example.com
+  apiKey: apiKey
+sonarr:
+  baseUrl: http://sonarr.example.com
+  apiKey: apiKey
 nodeSelector: {}

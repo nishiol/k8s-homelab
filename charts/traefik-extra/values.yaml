@@ -1,5 +1,4 @@
-# To create an encoded user:password pair, the following command can be used:
-# htpasswd -nb user password | openssl base64
-basicAuth: dXNlcjokYXByMSRTNVdsZ0NjMyRBUkduWXhvN0llZnBYSjFBY0J4c3IwCgo=
+user: user
+password: pass
 dashboardHostName: traefik.example.com
 certIssuer: staging-issuer

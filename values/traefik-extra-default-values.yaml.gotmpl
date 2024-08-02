@@ -1,3 +1,4 @@
-basicAuth: {{ htpasswd .Values.adminUser .Values.adminPassword | b64enc }}
+user: {{ .Values.adminUser }}
+password: {{ .Values.adminPassword }}
 dashboardHostName: traefik.{{ .Values.domain }}
 certIssuer: {{ .Values.certIssuer }}

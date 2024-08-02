@@ -26,7 +26,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: quality-config
+              mountPath: /config/configs
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-config
+        - name: quality-config
+          configMap:
+            name: {{ .Release.Name }}-quality-config

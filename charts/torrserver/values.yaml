@@ -1,4 +1,4 @@
-login: admin
+user: admin
 password: admin
 hostName: torrserver.example.com
 certIssuer: staging-issuer
