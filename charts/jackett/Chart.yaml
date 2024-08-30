@@ -3,4 +3,4 @@ name: jackett
 description: API Support for your favorite torrent trackers
 type: application
 version: 0.1.0
-appVersion: "0.22.364"
+appVersion: "0.22.538"

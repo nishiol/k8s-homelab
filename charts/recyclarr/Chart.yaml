@@ -3,4 +3,4 @@ name: recyclarr
 description: Recyclarr is a command-line application that will automatically synchronize recommended settings from the TRaSH guides to your Sonarr/Radarr instances
 type: application
 version: 0.1.0
-appVersion: "7.1.1"
+appVersion: "7.2.2"
