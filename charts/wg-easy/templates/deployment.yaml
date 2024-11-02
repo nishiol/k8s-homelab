@@ -35,7 +35,7 @@ spec:
           env:
             - name: WG_HOST
               value: "{{ .Values.hostName }}"
-            - name: PASSWORD
+            - name: PASSWORD_HASH
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}
