@@ -15,6 +15,8 @@ releases:
     namespace: cert-manager
     createNamespace: true
     chart: jetstack/cert-manager
+    values:
+      - values/cert-manager-default-values.yaml.gotmpl
   - name: clusterissuer
     namespace: default
     chart: charts/clusterissuer

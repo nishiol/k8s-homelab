@@ -18,6 +18,8 @@ spec:
         app: {{ .Release.Name }}
     spec:
       nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: qbittorrent
           image: "linuxserver/qbittorrent:{{ .Values.qbittorrent.imageTag }}"
