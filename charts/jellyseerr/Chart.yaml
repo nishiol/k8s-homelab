@@ -3,4 +3,4 @@ name: jellyseerr
 description: Overseerr fork with jellyfin support
 type: application
 version: 0.1.0
-appVersion: "2.0.1"
+appVersion: "2.3.0"
