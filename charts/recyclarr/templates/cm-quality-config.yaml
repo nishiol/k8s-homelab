@@ -9,7 +9,7 @@ data:
   radarr.yaml: |-
     ###################################################################################################
     # Recyclarr Configuration Template: Remux + WEB 2160p + WEB 1080p                                 #
-    # Updated: 2025-01-26                                                                            #
+    # Updated: 2025-05-04                                                                             #
     # Documentation: https://recyclarr.dev                                                            #
     # Note: If you are using multiple profiles in a single instance, please read the following        #
     # documentation about file merging:                                                               #
@@ -23,7 +23,7 @@ data:
         api_key: {{ .Values.radarr.apiKey }}
 
         quality_profiles:
-          - name: Remux + WEB 2160p + WEB 1080p
+          - name: Remux + WEB 2160p
             reset_unmatched_scores:
               enabled: true
             upgrade:
@@ -76,7 +76,7 @@ data:
               - 240770601cc226190c367ef59aba7463 # AAC
               - c2998bd0d90ed5621d8df281e839436e # DD
             assign_scores_to:
-              - name: Remux + WEB 2160p + WEB 1080p
+              - name: Remux + WEB 2160p
 
           # Movie Versions
           - trash_ids:
@@ -91,30 +91,29 @@ data:
             # - eecf3a857724171f968a66cb5719e152 # IMAX
             # - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
             assign_scores_to:
-              - name: Remux + WEB 2160p + WEB 1080p
+              - name: Remux + WEB 2160p
 
           # Optional
           - trash_ids:
             # - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
             # - cc444569854e9de0b084ab2b8b1532b2 # Black and White Editions
-            # - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL)
             # - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
             # - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
             # - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
             # - f537cf427b64c38c8e36298f657e4828 # Scene
             assign_scores_to:
-              - name: Remux + WEB 2160p + WEB 1080p
+              - name: Remux + WEB 2160p
 
           - trash_ids:
               # Uncomment the next six lines to allow x265 HD releases with HDR/DV
               - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
             assign_scores_to:
-              - name: Remux + WEB 2160p + WEB 1080p
+              - name: Remux + WEB 2160p
                 score: 0
           - trash_ids:
               - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
             assign_scores_to:
-              - name: Remux + WEB 2160p + WEB 1080p
+              - name: Remux + WEB 2160p
 
           - trash_ids:
             # Comment out the next line if you and all of your users' setups are fully DV compatible
@@ -124,7 +123,7 @@ data:
             # - b17886cb4158d9fea189859409975758 # HDR10Plus Boost
             # - 55a5b50cb416dea5a50c4955896217ab # DV HDR10+ Boost
             assign_scores_to:
-              - name: Remux + WEB 2160p + WEB 1080p
+              - name: Remux + WEB 2160p
 
           # Optional SDR
           # Only ever use ONE of the following custom formats:
@@ -134,7 +133,7 @@ data:
               # - 9c38ebb7384dada637be8899efa68e6f # SDR
               - 25c12f78430a3a23413652cbd1d48d77 # SDR (no WEBDL)
             assign_scores_to:
-              - name: Remux + WEB 2160p + WEB 1080p
+              - name: Remux + WEB 2160p
   sonarr.yaml: |-
     ###################################################################################################
     # Recyclarr Configuration Template: WEB-2160p + WEB-1080p (V4)                                    #
@@ -197,13 +196,10 @@ data:
             assign_scores_to:
               - name: WEB-2160p
                 score: 0
-              - name: WEB-1080p
-                score: 0
           - trash_ids:
               - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
             assign_scores_to:
               - name: WEB-2160p
-              - name: WEB-1080p
 
           # Optional SDR
           # Only ever use ONE of the following custom formats:

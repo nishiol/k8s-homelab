@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 8888
       targetPort: 8888

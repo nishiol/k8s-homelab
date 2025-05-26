@@ -27,9 +27,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /app/config
-          envFrom:
-            - configMapRef:
-                name: {{ .Release.Name }}-proxy
       volumes:
         - name: config
           persistentVolumeClaim:

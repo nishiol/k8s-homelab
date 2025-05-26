@@ -3,4 +3,4 @@ name: torrserver
 description: Simple and powerful tool for streaming torrents
 type: application
 version: 0.1.0
-appVersion: "MatriX.133t"
+appVersion: "MatriX.135"
