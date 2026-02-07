@@ -7,7 +7,6 @@ metadata:
     app: {{ .Release.Name }}
 spec:
   type: LoadBalancer
-  ipFamilyPolicy: PreferDualStack
   ports:
     - port: {{ .Values.qbittorrent.torrentingPort }}
       targetPort: 6881

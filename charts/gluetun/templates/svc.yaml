@@ -8,7 +8,17 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8888
+    - name: tcp-httpproxy
+      port: 8080
       targetPort: 8888
+      protocol: TCP
+    - name: tcp-shadowsocks
+      port: 8388
+      targetPort: 8388
+      protocol: TCP
+    - name: udp-shadowsocks
+      port: 8388
+      targetPort: 8388
+      protocol: UDP
   selector:
     app: {{ .Release.Name }}

@@ -20,5 +20,9 @@ spec:
     - port: 8096
       targetPort: 8096
       name: jellyfin
+    - port: 8081
+      targetPort: 80
+      protocol: TCP
+      name: filebrowser
   selector:
     app: {{ .Release.Name }}

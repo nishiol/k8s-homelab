@@ -7,5 +7,7 @@ sonarr:
   hostName: sonarr.{{ .Values.domain }}
 jellyfin:
   hostName: jellyfin.{{ .Values.domain }}
+filebrowser:
+  hostName: starr.{{ .Values.domain }}
 certIssuer: {{ .Values.certIssuer }}
-proxyUrl: "http://gluetun.gluetun:8888"
+proxyUrl: "http://gluetun.gluetun:8080"

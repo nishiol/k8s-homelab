@@ -19,7 +19,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
-      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
       containers:
         - name: recyclarr
           image: "recyclarr/recyclarr:{{ .Chart.AppVersion }}"

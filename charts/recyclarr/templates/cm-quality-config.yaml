@@ -9,14 +9,14 @@ data:
   radarr.yaml: |-
     ###################################################################################################
     # Recyclarr Configuration Template: Remux + WEB 2160p + WEB 1080p                                 #
-    # Updated: 2025-05-04                                                                             #
+    # Updated: 2025-09-07                                                                             #
     # Documentation: https://recyclarr.dev                                                            #
     # Note: If you are using multiple profiles in a single instance, please read the following        #
     # documentation about file merging:                                                               #
-    # https://recyclarr.dev/wiki/yaml/config-examples/#merge-single-instance                          #
+    # https://recyclarr.dev/reference/config-examples/#merge-single-instance                          #
     ###################################################################################################
 
-    # Instance Definition: https://recyclarr.dev/wiki/yaml/config-reference/basic/
+    # Instance Definition: https://recyclarr.dev/reference/configuration/basic/
     radarr:
       remux-web-2160p-1080p:
         base_url: {{ .Values.radarr.baseUrl }}
@@ -56,7 +56,7 @@ data:
           - template: radarr-quality-definition-movie
           - template: radarr-custom-formats-remux-web-2160p
 
-        # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
+        # Custom Formats: https://recyclarr.dev/reference/configuration/custom-formats/
         custom_formats:
           - trash_ids:
               # Audio
@@ -117,11 +117,13 @@ data:
 
           - trash_ids:
             # Comment out the next line if you and all of your users' setups are fully DV compatible
-            # - 923b6abef9b17f937fab56cfcf89e1f1 # DV (WEBDL)
+            # - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback)
 
-            # HDR10+ Boost - Uncomment the next two lines if any of your devices DO support HDR10+
-            # - b17886cb4158d9fea189859409975758 # HDR10Plus Boost
-            # - 55a5b50cb416dea5a50c4955896217ab # DV HDR10+ Boost
+            # HDR10+ Boost - Uncomment the HDR10+ Boost line if you want to prefer HDR10+ releases
+            # DV Boost - Uncomment the DV Boost line if you want to prefer DV releases
+            # Uncomment both lines if you want to prefer both (DV HDR10+)
+              - b337d6812e06c200ec9a2d3cfa9d20a7 # DV Boost
+              - caa37d0df9c348912df1fb1d88f9273a # HDR10+ Boost
             assign_scores_to:
               - name: Remux + WEB 2160p
 
@@ -137,15 +139,15 @@ data:
   sonarr.yaml: |-
     ###################################################################################################
     # Recyclarr Configuration Template: WEB-2160p + WEB-1080p (V4)                                    #
-    # Updated: 2024-10-02                                                                             #
+    # Updated: 2025-09-07                                                                             #
     # Documentation: https://recyclarr.dev                                                            #
     # Note: If you are using multiple profiles in a single instance, please read the following        #
     # documentation about file merging:                                                               #
-    # https://recyclarr.dev/wiki/yaml/config-examples/#merge-single-instance                          #
+    # https://recyclarr.dev/reference/config-examples/#merge-single-instance                          #
     # This config file is for use with Sonarr V4 only                                                 #
     ###################################################################################################
 
-    # Instance Definition: https://recyclarr.dev/wiki/yaml/config-reference/basic/
+    # Instance Definition: https://recyclarr.dev/reference/configuration/basic/
     sonarr:
       web-2160p-1080p-v4:
         base_url: {{ .Values.sonarr.baseUrl }}
@@ -167,16 +169,18 @@ data:
           - template: sonarr-v4-quality-profile-web-2160p-alternative
           - template: sonarr-v4-custom-formats-web-2160p
 
-        # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
+        # Custom Formats: https://recyclarr.dev/reference/configuration/custom-formats/
         custom_formats:
           # HDR Formats
           - trash_ids:
             # Comment out the next line if you and all of your users' setups are fully DV compatible
-            # - 9b27ab6498ec0f31a3353992e19434ca # DV (WEBDL)
+            # - 9b27ab6498ec0f31a3353992e19434ca # DV (w/o HDR fallback)
 
-            # HDR10+ Boost - Uncomment the next two lines if any of your devices DO support HDR10+
-            # - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10+ Boost
-            # - 385e9e8581d33133c3961bdcdeffb7b4 # DV HDR10+ Boost
+            # HDR10+ Boost - Uncomment the HDR10+ Boost line if you want to prefer HDR10+ releases
+            # DV Boost - Uncomment the DV Boost line if you want to prefer DV releases
+            # Uncomment both lines if you want to prefer both (DV HDR10+)
+              - 0c4b99df9206d2cfac3c05ab897dd62a # HDR10+ Boost
+              - 7c3a61a9c6cb04f52f1544be6d44a026 # DV Boost
             assign_scores_to:
               - name: WEB-2160p
 

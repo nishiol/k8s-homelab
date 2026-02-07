@@ -17,7 +17,7 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
       containers:
         - name: jellyseerr
           image: "fallenbagel/jellyseerr:{{ .Chart.AppVersion }}"

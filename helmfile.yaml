@@ -50,6 +50,7 @@ releases:
     chart: charts/gluetun
     missingFileHandler: Warn
     values:
+      - values/gluetun-default-values.yaml.gotmpl
       - values/gluetun-values.yaml
   - name: jackett
     namespace: jackett

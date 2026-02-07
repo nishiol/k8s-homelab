@@ -3,4 +3,4 @@ name: flaresolverr
 description: FlareSolverr is a proxy server to bypass Cloudflare protection
 type: application
 version: 0.1.0
-appVersion: "v3.3.21"
+appVersion: "v3.4.6"

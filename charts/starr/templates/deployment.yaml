@@ -17,7 +17,7 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
       securityContext:
         fsGroup: 1000
       containers:
@@ -42,7 +42,7 @@ spec:
             - name: media
               mountPath: /data
             {{- if .Values.additionalVolumeMounts }}
-              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+              {{ toYaml .Values.additionalVolumeMounts | nindent 12 }}
             {{- end }}
         - name: sonarr
           image: "linuxserver/sonarr:{{ .Values.sonarr.imageTag }}"
@@ -61,7 +61,7 @@ spec:
             - name: media
               mountPath: /data
             {{- if .Values.additionalVolumeMounts }}
-              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+              {{ toYaml .Values.additionalVolumeMounts | nindent 12 }}
             {{- end }}
         - name: radarr
           image: "linuxserver/radarr:{{ .Values.radarr.imageTag }}"
@@ -80,7 +80,7 @@ spec:
             - name: media
               mountPath: /data
             {{- if .Values.additionalVolumeMounts }}
-              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+              {{ toYaml .Values.additionalVolumeMounts | nindent 12 }}
             {{- end }}
         - name: jellyfin
           image: "linuxserver/jellyfin:{{ .Values.jellyfin.imageTag }}"
@@ -112,10 +112,34 @@ spec:
             - name: transcodes
               mountPath: /config/cache/transcodes
             {{- if .Values.additionalVolumeMounts }}
-              {{- toYaml .Values.additionalVolumeMounts | nindent 12 }}
+              {{ toYaml .Values.additionalVolumeMounts | nindent 12 }}
             {{- end }}
           securityContext:
             privileged: true
+        - name: filebrowser
+          image: "filebrowser/filebrowser:{{ .Values.filebrowser.imageTag }}"
+          env:
+            - name: FB_DISABLE_EXEC
+              value: "false"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /config
+              subPath: filebrowser/config
+            - name: config
+              mountPath: /database
+              subPath: filebrowser/database
+            - name: media
+              mountPath: /srv/media
+            {{- if .Values.additionalFileBrowserVolumeMounts }}
+              {{ toYaml .Values.additionalFileBrowserVolumeMounts | nindent 12 }}
+            {{- end }}
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -131,5 +155,5 @@ spec:
             medium: Memory
             sizeLimit: {{ .Values.jellyfin.transcodeCacheSize }}
         {{- if .Values.additionalVolumeMounts }}
-          {{- toYaml .Values.additionalVolumes | nindent 8 }}
+          {{ toYaml .Values.additionalVolumes | nindent 8 }}
         {{- end }}

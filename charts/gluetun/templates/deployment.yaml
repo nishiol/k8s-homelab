@@ -17,18 +17,34 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
       containers:
         - name: gluetun
           image: "qmcgaw/gluetun:{{ .Chart.AppVersion }}"
           ports:
-            - containerPort: 8888
+            - name: tcp-httpproxy
+              containerPort: 8888
+              protocol: TCP
+            - name: udp-shadowsocks
+              containerPort: 8388
+              protocol: UDP
+            - name: tcp-shadowsocks
+              containerPort: 8388
               protocol: TCP
           securityContext:
             capabilities:
               add:
                 - NET_ADMIN
           env:
+            - name: SHADOWSOCKS
+              value: "on"
+            - name: SHADOWSOCKS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: password
+            - name: SHADOWSOCKS_CIPHER
+              value: "chacha20-ietf-poly1305"
             - name: HTTPPROXY
               value: "on"
             - name: VPN_SERVICE_PROVIDER

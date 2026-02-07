@@ -7,7 +7,6 @@ metadata:
     app: {{ .Release.Name }}
 spec:
   type: LoadBalancer
-  ipFamilyPolicy: PreferDualStack
   ports:
     - port: 51820
       targetPort: 51820
