@@ -1,20 +1,20 @@
 qbittorrent:
   hostName: qbittorrent.example.com
-  imageTag: "5.1.4"
+  imageTag: "5.2.2"
   torrentingPort: 6881
 radarr:
   hostName: radarr.example.com
-  imageTag: "6.0.4"
+  imageTag: "6.2.1"
 sonarr:
   hostName: sonarr.example.com
-  imageTag: "4.0.16"
+  imageTag: "4.0.17"
 jellyfin:
   hostName: jellyfin.example.com
-  imageTag: "10.11.6"
+  imageTag: "10.11.11"
   transcodeCacheSize: 2Gi
 filebrowser:
   hostName: starr.example.com
-  imageTag: "v2.57.0"
+  imageTag: "v2.63.15"
 certIssuer: staging-issuer
 mediaSize: 200Gi
 proxyUrl: "http://example.com:8080"

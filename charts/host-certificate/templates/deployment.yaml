@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+{{- toYaml .Values.nodeSelector | nindent 8 }}
+      containers:
+        - name: sync-certificate
+          image: alpine:3.20
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              mkdir -p /host-certs
+
+              while true; do
+                for file in tls.crt tls.key ca.crt; do
+                  [ -f "/certs/$file" ] || continue
+
+                  tmp="/host-certs/$file.tmp"
+                  cp "/certs/$file" "$tmp"
+                  if [ "$file" = "tls.key" ]; then
+                    chmod 0600 "$tmp"
+                  else
+                    chmod 0644 "$tmp"
+                  fi
+                  mv "$tmp" "/host-certs/$file"
+                done
+
+                sleep 300
+              done
+          volumeMounts:
+            - name: certificate
+              mountPath: /certs
+              readOnly: true
+            - name: host-certs
+              mountPath: /host-certs
+      volumes:
+        - name: certificate
+          secret:
+            secretName: {{ .Release.Name }}-tls
+            optional: true
+        - name: host-certs
+          hostPath:
+            path: {{ required "hostPath is required" .Values.hostPath }}
+            type: DirectoryOrCreate

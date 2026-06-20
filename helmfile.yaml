@@ -11,6 +11,7 @@ releases:
     namespace: cert-manager
     createNamespace: true
     chart: jetstack/cert-manager
+    version: v1.20.2
     values:
       - values/cert-manager-default-values.yaml.gotmpl
   - name: clusterissuer
@@ -20,6 +21,15 @@ releases:
     missingFileHandler: Warn
     values:
       - values/clusterissuer-values.yaml
+  - name: host-certificate
+    namespace: host-certificate
+    createNamespace: true
+    chart: charts/host-certificate
+    needs: [default/clusterissuer]
+    missingFileHandler: Warn
+    values:
+      - values/host-certificate-default-values.yaml.gotmpl
+      - values/host-certificate-values.yaml
   - name: traefik-extra
     namespace: traefik-extra
     createNamespace: true
@@ -32,6 +42,7 @@ releases:
     namespace: longhorn-system
     createNamespace: true
     chart: longhorn/longhorn
+    version: 1.12.0
     needs: [default/clusterissuer, traefik-extra/traefik-extra]
     missingFileHandler: Warn
     values:
