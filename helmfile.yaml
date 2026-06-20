@@ -84,12 +84,12 @@ releases:
   - name: jellyseerr
     namespace: jellyseerr
     createNamespace: true
-    chart: charts/jellyseerr
+    chart: charts/seerr
     needs: [default/clusterissuer, longhorn-system/longhorn, gluetun/gluetun, starr/starr]
     missingFileHandler: Warn
     values:
-      - values/jellyseerr-default-values.yaml.gotmpl
-      - values/jellyseerr-values.yaml
+      - values/seerr-default-values.yaml.gotmpl
+      - values/seerr-values.yaml
   - name: recyclarr
     namespace: recyclarr
     createNamespace: true

@@ -1,5 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+{{- $hosts := list .Values.hostName }}
+{{- with .Values.legacyHostName }}
+{{- $hosts = append $hosts . }}
+{{- end }}
 metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
@@ -9,17 +13,21 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.certIssuer }}
 spec:
   rules:
-    - host: {{ .Values.hostName }}
+    {{- range $hosts }}
+    - host: {{ . }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{ .Release.Name }}
+                name: {{ $.Release.Name }}
                 port:
                   number: 5055
+    {{- end }}
   tls:
     - hosts:
-        - {{ .Values.hostName }}
+        {{- range $hosts }}
+        - {{ . }}
+        {{- end }}
       secretName: {{ .Release.Name }}
