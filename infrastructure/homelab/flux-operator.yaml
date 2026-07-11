@@ -1,0 +1,57 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: flux-operator-basic-auth
+  namespace: flux-system
+spec:
+  basicAuth:
+    secret: flux-operator-auth
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: flux-operator
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: clusterissuer
+      namespace: default
+  interval: 30m
+  releaseName: flux-operator
+  targetNamespace: flux-system
+  storageNamespace: flux-system
+  chart:
+    spec:
+      chart: flux-operator
+      version: 0.54.1
+      sourceRef:
+        kind: HelmRepository
+        name: flux-operator
+        namespace: flux-system
+      interval: 1h
+  install:
+    createNamespace: false
+    crds: Create
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    web:
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: prod-issuer
+          traefik.ingress.kubernetes.io/router.middlewares: flux-system-flux-operator-basic-auth@kubernetescrd
+        hosts:
+          - host: flux.nishiol.ru
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - flux.nishiol.ru
+            secretName: flux-operator-tls
