@@ -1,4 +1,5 @@
 hostName: wg.example.com
-certIssuer: staging-issuer
-password: admin
+certIssuer: prod-issuer
+# Existing Secret must contain a bcrypt-hashed password under the password key.
+existingSecret: ""
 nodeSelector: {}

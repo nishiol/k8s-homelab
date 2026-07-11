@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gluetun
+  namespace: gluetun
+spec:
+  interval: 30m
+  releaseName: gluetun
+  targetNamespace: gluetun
+  storageNamespace: gluetun
+  chart:
+    spec:
+      chart: ./charts/gluetun
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    existingSecret: gluetun-credentials
+    wireguard:
+      endpoint: 195.58.46.31
+      port: 10001
+      mtu: 1280
+      publicKey: jh1+grDHWOCDfgKqU7fF82nvm8vt9JeKNgfwpsV2RDU=
+      addresses: 10.10.217.23/32
+      allowedIps: 0.0.0.0/0
+    nodeSelector:
+      cpu: slow

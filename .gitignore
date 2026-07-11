@@ -1,1 +1,7 @@
 .idea
+
+# Never commit decrypted SOPS material or age identities.
+*.dec.yaml
+*.decrypted.yaml
+*.agekey
+keys.txt

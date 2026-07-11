@@ -1,4 +1,4 @@
-user: user
-password: pass
+# Existing Secret must contain a Traefik-compatible users key.
+existingSecret: ""
 dashboardHostName: traefik.example.com
-certIssuer: staging-issuer
+certIssuer: prod-issuer

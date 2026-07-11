@@ -28,6 +28,9 @@ spec:
               mountPath: /config
             - name: quality-config
               mountPath: /config/configs
+            - name: api-keys
+              mountPath: /run/secrets/recyclarr
+              readOnly: true
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -35,3 +38,6 @@ spec:
         - name: quality-config
           configMap:
             name: {{ .Release.Name }}-quality-config
+        - name: api-keys
+          secret:
+            secretName: {{ required "existingSecret is required" .Values.existingSecret | quote }}

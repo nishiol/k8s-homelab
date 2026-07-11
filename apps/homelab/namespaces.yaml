@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: concierge
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flaresolverr
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gluetun
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jackett
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jellyseerr
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: recyclarr
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: starr
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: torrserver-earth
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: torrserver-moon
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wg-easy

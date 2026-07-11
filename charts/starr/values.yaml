@@ -15,7 +15,7 @@ jellyfin:
 filebrowser:
   hostName: starr.example.com
   imageTag: "v2.63.15"
-certIssuer: staging-issuer
+certIssuer: prod-issuer
 mediaSize: 200Gi
 proxyUrl: "http://example.com:8080"
 noProxy: ".svc.cluster.local,localhost,127.0.0.1"

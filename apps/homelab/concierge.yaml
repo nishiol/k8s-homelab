@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: concierge
+  namespace: concierge
+spec:
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
+  interval: 30m
+  releaseName: concierge
+  targetNamespace: concierge
+  storageNamespace: concierge
+  chart:
+    spec:
+      chart: concierge
+      version: 0.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: concierge
+        namespace: flux-system
+      interval: 1h
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: ghcr.io/nishiol/concierge
+    imagePullSecrets:
+      - name: ghcr
+    persistence:
+      storageClassName: longhorn
+    env:
+      BOT_ADMINS: "238029022"
+      BOT_ALLOWED_USERS: "867950761"
+      PAKT_BASE_URL: https://dm.pakt.ru/api/app/
+      TELEGRAM_PROXY_URL: null
+    secretEnv:
+      TELEGRAM_PROXY_URL:
+        secretName: concierge-secrets
+        key: telegram-proxy-url
+        optional: false
+    nodeSelector:
+      cpu: slow

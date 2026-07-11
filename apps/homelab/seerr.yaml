@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyseerr
+  namespace: jellyseerr
+spec:
+  dependsOn:
+    - name: clusterissuer
+      namespace: default
+    - name: longhorn
+      namespace: longhorn-system
+    - name: gluetun
+      namespace: gluetun
+    - name: starr
+      namespace: starr
+  interval: 30m
+  releaseName: jellyseerr
+  targetNamespace: jellyseerr
+  storageNamespace: jellyseerr
+  chart:
+    spec:
+      chart: ./charts/seerr
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    hostName: seerr.nishiol.ru
+    legacyHostName: jellyseerr.nishiol.ru
+    certIssuer: prod-issuer
+    proxyUrl: http://gluetun.gluetun:8888
+    noProxy: .svc.cluster.local,localhost,127.0.0.1
+    image:
+      repository: ghcr.io/seerr-team/seerr
+      pullPolicy: IfNotPresent
+    nodeSelector:
+      cpu: slow

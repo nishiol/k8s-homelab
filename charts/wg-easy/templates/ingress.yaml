@@ -22,4 +22,4 @@ spec:
   tls:
     - hosts:
         - {{ .Values.hostName }}
-      secretName: {{ .Release.Name }}
+      secretName: {{ .Release.Name }}-tls

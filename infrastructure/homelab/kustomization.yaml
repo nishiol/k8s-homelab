@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespaces.yaml
+  - repositories.yaml
+  - k3s-config.yaml
+  - cert-manager.yaml
+  - clusterissuer.yaml
+  - traefik-extra.yaml
+  - longhorn.yaml
+  - host-certificate.yaml
+  - secrets/concierge-chart-registry.sops.yaml
+  - secrets/traefik-extra-auth.sops.yaml
+patches:
+  - target:
+      kind: HelmRelease
+    patch: |-
+      - op: add
+        path: /spec/maxHistory
+        value: 10

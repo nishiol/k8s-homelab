@@ -41,7 +41,7 @@ spec:
             - name: SHADOWSOCKS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}
+                  name: {{ required "existingSecret is required" .Values.existingSecret | quote }}
                   key: password
             - name: SHADOWSOCKS_CIPHER
               value: "chacha20-ietf-poly1305"
@@ -62,7 +62,7 @@ spec:
             - name: WIREGUARD_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}
+                  name: {{ required "existingSecret is required" .Values.existingSecret | quote }}
                   key: privateKey
             - name: WIREGUARD_ADDRESSES
               value: "{{ .Values.wireguard.addresses }}"

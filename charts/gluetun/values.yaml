@@ -2,10 +2,9 @@ wireguard:
   endpoint: 88.88.88.88
   port: 10001
   mtu: 1280
-  privateKey: privateKey
   publicKey: publicKey
   addresses: 192.168.0.1/32
   allowedIps: 0.0.0.0/0
-proxy:
-  password: example
+# Existing Secret must contain the privateKey and password keys.
+existingSecret: ""
 nodeSelector: {}

@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: recyclarr
+  namespace: recyclarr
+spec:
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
+    - name: starr
+      namespace: starr
+  interval: 30m
+  releaseName: recyclarr
+  targetNamespace: recyclarr
+  storageNamespace: recyclarr
+  chart:
+    spec:
+      chart: ./charts/recyclarr
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    existingSecret: recyclarr-api-keys
+    radarr:
+      baseUrl: http://starr.starr:7878
+    sonarr:
+      baseUrl: http://starr.starr:8989
+    nodeSelector:
+      cpu: slow

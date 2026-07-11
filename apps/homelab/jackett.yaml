@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jackett
+  namespace: jackett
+spec:
+  dependsOn:
+    - name: clusterissuer
+      namespace: default
+    - name: longhorn
+      namespace: longhorn-system
+    - name: gluetun
+      namespace: gluetun
+    - name: flaresolverr
+      namespace: flaresolverr
+  interval: 30m
+  releaseName: jackett
+  targetNamespace: jackett
+  storageNamespace: jackett
+  chart:
+    spec:
+      chart: ./charts/jackett
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    hostName: jackett.nishiol.ru
+    certIssuer: prod-issuer
+    nodeSelector:
+      cpu: medium

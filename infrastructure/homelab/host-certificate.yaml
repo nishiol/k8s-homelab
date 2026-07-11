@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: host-certificate
+  namespace: host-certificate
+spec:
+  dependsOn:
+    - name: clusterissuer
+      namespace: default
+  interval: 30m
+  releaseName: host-certificate
+  targetNamespace: host-certificate
+  storageNamespace: host-certificate
+  chart:
+    spec:
+      chart: ./charts/host-certificate
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    hostName: vl.nishiol.ru
+    certIssuer: prod-issuer
+    hostPath: /var/lib/k8s-homelab/certs/host-certificate
+    nodeSelector:
+      kubernetes.io/hostname: beelink-s12-pro

@@ -154,6 +154,6 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: {{ .Values.jellyfin.transcodeCacheSize }}
-        {{- if .Values.additionalVolumeMounts }}
+        {{- if .Values.additionalVolumes }}
           {{ toYaml .Values.additionalVolumes | nindent 8 }}
         {{- end }}

@@ -1,4 +1,4 @@
 hostName: host.example.com
-certIssuer: staging-issuer
+certIssuer: prod-issuer
 hostPath: /var/lib/k8s-homelab/certs/host-certificate
 nodeSelector: {}

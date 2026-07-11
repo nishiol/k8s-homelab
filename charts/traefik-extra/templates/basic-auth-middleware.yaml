@@ -5,4 +5,4 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   basicAuth:
-    secret: basic-auth
+    secret: {{ required "existingSecret is required" .Values.existingSecret | quote }}

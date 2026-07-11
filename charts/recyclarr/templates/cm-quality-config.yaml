@@ -15,9 +15,9 @@ data:
     ################################################################################
 
     radarr:
-      remux-web-2160p-1080p:
+      remux_web_2160p_1080p:
         base_url: {{ .Values.radarr.baseUrl }}
-        api_key: {{ .Values.radarr.apiKey }}
+        api_key: !file /run/secrets/recyclarr/radarr_api_key
 
         quality_definition:
           type: movie
@@ -81,9 +81,9 @@ data:
     ################################################################################
 
     sonarr:
-      web-2160p-1080p-v4:
+      web_2160p_1080p_v4:
         base_url: {{ .Values.sonarr.baseUrl }}
-        api_key: {{ .Values.sonarr.apiKey }}
+        api_key: !file /run/secrets/recyclarr/sonarr_api_key
 
         quality_definition:
           type: series

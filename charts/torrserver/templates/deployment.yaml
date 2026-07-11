@@ -54,6 +54,6 @@ spec:
             claimName: {{ .Release.Name }}
         - name: accs
           secret:
-            secretName: {{ .Release.Name }}
+            secretName: {{ required "existingSecret is required" .Values.existingSecret | quote }}
         - name: logs
           emptyDir: { }

@@ -1,6 +1,6 @@
-user: admin
-password: admin
+# Existing Secret must contain an accs.db key with TorrServer credentials JSON.
+existingSecret: ""
 hostName: torrserver.example.com
-certIssuer: staging-issuer
+certIssuer: prod-issuer
 incomingConnectionsPort: 56335
 nodeSelector: {}
