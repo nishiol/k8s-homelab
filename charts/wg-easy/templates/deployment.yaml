@@ -33,13 +33,8 @@ spec:
             - containerPort: 51821
               protocol: TCP
           env:
-            - name: WG_HOST
-              value: "{{ .Values.hostName }}"
-            - name: PASSWORD_HASH
-              valueFrom:
-                secretKeyRef:
-                  name: {{ required "existingSecret is required" .Values.existingSecret | quote }}
-                  key: password
+            - name: DISABLE_IPV6
+              value: {{ .Values.disableIPv6 | quote }}
           volumeMounts:
             - name: config
               mountPath: /etc/wireguard

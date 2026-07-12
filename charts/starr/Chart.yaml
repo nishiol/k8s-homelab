@@ -2,5 +2,5 @@ apiVersion: v2
 name: starr
 description: Sonarr + Radarr + qBittorrent + Jellyfin AIO
 type: application
-version: 0.3.0
+version: 0.3.1
 appVersion: "0.1.0"

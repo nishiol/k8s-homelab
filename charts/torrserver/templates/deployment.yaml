@@ -20,7 +20,7 @@ spec:
       nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
       initContainers:
         - name: create-empty-file
-          image: alpine
+          image: alpine:3.24.1
           command: [ "touch", "/opt/ts/log" ]
           volumeMounts:
             - name: logs

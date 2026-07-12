@@ -31,8 +31,8 @@ spec:
     remediation:
       retries: 3
   values:
-    existingSecret: wg-easy-credentials
     hostName: wg.nishiol.ru
     certIssuer: prod-issuer
+    disableIPv6: true
     nodeSelector:
       cpu: slow

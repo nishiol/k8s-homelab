@@ -1,5 +1,4 @@
 hostName: wg.example.com
 certIssuer: prod-issuer
-# Existing Secret must contain a bcrypt-hashed password under the password key.
-existingSecret: ""
+disableIPv6: false
 nodeSelector: {}
