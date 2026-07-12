@@ -37,21 +37,16 @@ spec:
   values:
     qbittorrent:
       hostName: qbittorrent.nishiol.ru
-      imageTag: "5.2.2"
       torrentingPort: 6881
     radarr:
       hostName: radarr.nishiol.ru
-      imageTag: "6.2.1"
     sonarr:
       hostName: sonarr.nishiol.ru
-      imageTag: "4.0.17"
     jellyfin:
       hostName: jellyfin.nishiol.ru
-      imageTag: "10.11.11"
       transcodeCacheSize: 2Gi
     filebrowser:
       hostName: starr.nishiol.ru
-      imageTag: v2.63.15
     certIssuer: prod-issuer
     mediaSize: 300Gi
     proxyUrl: http://gluetun.gluetun:8080
