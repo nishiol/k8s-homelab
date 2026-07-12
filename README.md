@@ -1,23 +1,25 @@
 # k8s-homelab
 
-Declarative configuration for a two-node k3s cluster. Flux CD reconciles the
-`main` branch over HTTPS, Kustomize assembles Kubernetes resources, HelmRelease
-manages Helm charts, and SOPS with age encrypts every committed Secret.
+Declarative configuration for a two-node k3s cluster. Flux Operator manages the
+Flux controllers from a `FluxInstance`, Flux reconciles the `main` branch over
+HTTPS, Kustomize assembles Kubernetes resources, HelmRelease manages Helm
+charts, and SOPS with age encrypts every committed Secret.
 
 ## Layout
 
 ```text
 apps/homelab/            Application HelmRelease and SOPS Secret manifests
-bootstrap/flux/          Flux installation and repository bootstrap
+bootstrap/flux/          Flux Operator installation and cluster bootstrap
 bootstrap/k3s/           Pinned k3s server and agent installation
 charts/                  Local Helm charts
-clusters/homelab/        Flux entry point
+clusters/homelab/        FluxInstance and cluster entry point
 infrastructure/homelab/  Cluster services, chart sources and SOPS Secrets
 scripts/                 Rendering and validation helpers
 ```
 
-Flux applies `infrastructure/homelab` first and then `apps/homelab`. The
-k3s-provided `traefik` and `traefik-crd` Helm releases remain managed by k3s.
+The operator owns the Flux controllers and root Git sync. Flux applies
+`infrastructure/homelab` first and then `apps/homelab`. The k3s-provided
+`traefik` and `traefik-crd` Helm releases remain managed by k3s.
 
 ## Requirements
 
@@ -102,7 +104,7 @@ sudo K3S_URL=https://nishiol.ru:6443 \
 Copy `/etc/rancher/k3s/k3s.yaml` to the administration workstation, replace
 the loopback API address and create an explicit kubectl context.
 
-## Bootstrap Flux
+## Bootstrap Flux Operator
 
 Push the desired state before bootstrapping because Flux reads GitHub rather
 than the local working tree. Then run:
@@ -114,11 +116,16 @@ KUBE_CONTEXT=homelab ./bootstrap/flux/bootstrap.sh
 
 The script verifies the current kubectl context and age identity. It accepts
 the k3s-owned Traefik releases but refuses a cluster containing other Helm
-releases.
+releases. It installs the pinned Flux Operator chart, creates the SOPS key
+Secret, applies the `FluxInstance` and waits for the operator-managed Flux
+controllers and Git sync to become ready. The Git-managed `HelmRelease` then
+adopts the operator release and manages subsequent upgrades.
 
 Monitor reconciliation:
 
 ```bash
+kubectl --namespace flux-system get fluxinstance flux
+flux check
 flux get sources git -A
 flux get kustomizations -A
 flux get helmreleases -A
@@ -133,6 +140,7 @@ separately. Starr also expects the static `media-raspberrypi4` PVC to exist.
 Reconcile Git and inspect status:
 
 ```bash
+kubectl --namespace flux-system get fluxinstance flux
 flux reconcile source git flux-system
 flux get kustomizations -A
 flux get helmreleases -A
@@ -158,3 +166,8 @@ diff and take storage backups before committing resource removals.
 To update k3s, change `K3S_VERSION` in both scripts under `bootstrap/k3s/`,
 back up the cluster, update the server first, verify it, and then update the
 agent.
+
+To update Flux Operator, change its chart version in both
+`bootstrap/flux/bootstrap.sh` and `infrastructure/homelab/flux-operator.yaml`.
+The operator automatically applies compatible Flux patch releases selected by
+the `2.9.x` range in `clusters/homelab/flux-instance.yaml`.
