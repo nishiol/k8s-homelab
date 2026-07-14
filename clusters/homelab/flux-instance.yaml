@@ -28,15 +28,3 @@ spec:
     ref: refs/heads/main
     path: clusters/homelab
     interval: 1m
-  kustomize:
-    patches:
-      - target:
-          kind: Kustomization
-          name: flux-system
-        patch: |
-          - op: add
-            path: /spec/wait
-            value: true
-          - op: add
-            path: /spec/timeout
-            value: 25m
