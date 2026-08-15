@@ -75,8 +75,29 @@ state and require separate backups.
 ## Install k3s
 
 The bootstrap scripts pin k3s to `v1.36.3+k3s1`. Before installing, configure
-DNS and install Longhorn host requirements such as `open-iscsi` and
-`nfs-common`.
+DNS and prepare every Longhorn node:
+
+```bash
+sudo apt-get install open-iscsi nfs-common cryptsetup dmsetup
+printf 'nfs\ndm_crypt\n' | sudo tee /etc/modules-load.d/longhorn.conf
+sudo modprobe nfs
+sudo modprobe dm_crypt
+sudo systemctl enable --now iscsid
+```
+
+If the host does not use multipath devices, disable `multipathd` so it cannot
+claim Longhorn block devices:
+
+```bash
+sudo systemctl disable --now multipathd.service multipathd.socket
+```
+
+After the cluster is reachable, verify every node with the `longhornctl`
+version matching the installed Longhorn release:
+
+```bash
+longhornctl check preflight
+```
 
 Install the server:
 

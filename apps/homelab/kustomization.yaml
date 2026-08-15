@@ -5,6 +5,7 @@ resources:
   - flaresolverr.yaml
   - gluetun.yaml
   - jackett.yaml
+  - prowlarr.yaml
   - starr.yaml
   - seerr.yaml
   - recyclarr.yaml

@@ -29,6 +29,7 @@ render_release "$repo_root/infrastructure/homelab/host-certificate.yaml" host-ce
 render_release "$repo_root/apps/homelab/flaresolverr.yaml" flaresolverr
 render_release "$repo_root/apps/homelab/gluetun.yaml" gluetun
 render_release "$repo_root/apps/homelab/jackett.yaml" jackett
+render_release "$repo_root/apps/homelab/prowlarr.yaml" prowlarr
 render_release "$repo_root/apps/homelab/starr.yaml" starr
 render_release "$repo_root/apps/homelab/seerr.yaml" seerr
 render_release "$repo_root/apps/homelab/recyclarr.yaml" recyclarr

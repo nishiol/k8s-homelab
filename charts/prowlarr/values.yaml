@@ -1,0 +1,9 @@
+hostName: prowlarr.example.com
+certIssuer: prod-issuer
+timezone: Etc/UTC
+image:
+  repository: linuxserver/prowlarr
+  pullPolicy: IfNotPresent
+persistence:
+  size: 1Gi
+nodeSelector: {}

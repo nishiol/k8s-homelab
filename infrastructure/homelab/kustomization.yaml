@@ -4,6 +4,7 @@ resources:
   - namespaces.yaml
   - repositories.yaml
   - k3s-config.yaml
+  - coredns-ha.yaml
   - cert-manager.yaml
   - clusterissuer.yaml
   - flux-operator.yaml
