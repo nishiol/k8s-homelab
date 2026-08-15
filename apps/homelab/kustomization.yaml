@@ -16,6 +16,7 @@ resources:
   - secrets/concierge-secrets.sops.yaml
   - secrets/ghcr.sops.yaml
   - secrets/gluetun-credentials.sops.yaml
+  - secrets/flaresolverr-proxy.sops.yaml
   - secrets/recyclarr-api-keys.sops.yaml
   - secrets/torrserver-earth-credentials.sops.yaml
   - secrets/torrserver-moon-credentials.sops.yaml

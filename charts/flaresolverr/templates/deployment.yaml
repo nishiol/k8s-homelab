@@ -19,8 +19,11 @@ spec:
     spec:
       nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
       containers:
-        - name: gluetun
+        - name: flaresolverr
           image: "flaresolverr/flaresolverr:{{ .Chart.AppVersion }}"
+          envFrom:
+            - secretRef:
+                name: {{ required "existingSecret is required" .Values.existingSecret | quote }}
           ports:
             - containerPort: 8191
               protocol: TCP
