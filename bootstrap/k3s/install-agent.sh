@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-K3S_VERSION="${K3S_VERSION:-v1.36.2+k3s1}"
+K3S_VERSION="${K3S_VERSION:-v1.36.3+k3s1}"
 K3S_URL="${K3S_URL:?set K3S_URL, for example https://server:6443}"
 K3S_TOKEN="${K3S_TOKEN:?set K3S_TOKEN to the server node token}"
 K3S_NODE_NAME="${K3S_NODE_NAME:-raspberrypi4}"

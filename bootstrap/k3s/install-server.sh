@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-K3S_VERSION="${K3S_VERSION:-v1.36.2+k3s1}"
+K3S_VERSION="${K3S_VERSION:-v1.36.3+k3s1}"
 K3S_NODE_NAME="${K3S_NODE_NAME:-beelink-s12-pro}"
 K3S_TLS_SAN="${K3S_TLS_SAN:?set K3S_TLS_SAN to the API DNS name or IP}"
 K3S_CPU_CLASS="${K3S_CPU_CLASS:-medium}"

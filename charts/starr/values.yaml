@@ -4,7 +4,7 @@ qbittorrent:
   torrentingPort: 6881
 radarr:
   hostName: radarr.example.com
-  imageTag: "6.2.1"
+  imageTag: "6.3.0"
 sonarr:
   hostName: sonarr.example.com
   imageTag: "4.0.19"
@@ -14,7 +14,7 @@ jellyfin:
   transcodeCacheSize: 2Gi
 filebrowser:
   hostName: starr.example.com
-  imageTag: "v2.63.18"
+  imageTag: "v2.63.23"
 certIssuer: prod-issuer
 mediaSize: 200Gi
 proxyUrl: "http://example.com:8080"

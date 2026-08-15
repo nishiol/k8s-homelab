@@ -3,7 +3,7 @@ set -euo pipefail
 
 KUBE_CONTEXT="${KUBE_CONTEXT:?set KUBE_CONTEXT explicitly}"
 SOPS_AGE_KEY_FILE="${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}"
-FLUX_OPERATOR_VERSION="0.54.1"
+FLUX_OPERATOR_VERSION="0.58.0"
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 current_context="$(kubectl config current-context)"

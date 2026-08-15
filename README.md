@@ -74,7 +74,7 @@ state and require separate backups.
 
 ## Install k3s
 
-The bootstrap scripts pin k3s to `v1.36.2+k3s1`. Before installing, configure
+The bootstrap scripts pin k3s to `v1.36.3+k3s1`. Before installing, configure
 DNS and install Longhorn host requirements such as `open-iscsi` and
 `nfs-common`.
 
