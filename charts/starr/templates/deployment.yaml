@@ -19,15 +19,43 @@ spec:
     spec:
       nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
       securityContext:
-        fsGroup: 1000
+        fsGroup: {{ .Values.pgid }}
+        fsGroupChangePolicy: OnRootMismatch
+      initContainers:
+        - name: prepare-media-directories
+          image: {{ .Values.mediaInitializer.image | quote }}
+          command:
+            - sh
+            - -ec
+          args:
+            - |
+              for directory do
+                mkdir -p "${directory}"
+                chown 0:{{ .Values.pgid }} "${directory}"
+                chmod 2775 "${directory}"
+                if [ ! -e "${directory}/.anchor" ]; then
+                  touch "${directory}/.anchor"
+                fi
+                chown {{ .Values.puid }}:{{ .Values.pgid }} "${directory}/.anchor"
+                chmod 0664 "${directory}/.anchor"
+              done
+            - prepare-media-directories
+            {{- range .Values.mediaInitializer.directories }}
+            - {{ . | quote }}
+            {{- end }}
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: media
+              mountPath: /data
       containers:
         - name: qbittorrent
           image: "linuxserver/qbittorrent:{{ .Values.qbittorrent.imageTag }}"
           env:
             - name: PUID
-              value: "1000"
+              value: {{ .Values.puid | quote }}
             - name: PGID
-              value: "1000"
+              value: {{ .Values.pgid | quote }}
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -48,9 +76,9 @@ spec:
           image: "linuxserver/sonarr:{{ .Values.sonarr.imageTag }}"
           env:
             - name: PUID
-              value: "1000"
+              value: {{ .Values.puid | quote }}
             - name: PGID
-              value: "1000"
+              value: {{ .Values.pgid | quote }}
           ports:
             - containerPort: 8989
               protocol: TCP
@@ -67,9 +95,9 @@ spec:
           image: "linuxserver/radarr:{{ .Values.radarr.imageTag }}"
           env:
             - name: PUID
-              value: "1000"
+              value: {{ .Values.puid | quote }}
             - name: PGID
-              value: "1000"
+              value: {{ .Values.pgid | quote }}
           ports:
             - containerPort: 7878
               protocol: TCP
@@ -86,9 +114,9 @@ spec:
           image: "linuxserver/jellyfin:{{ .Values.jellyfin.imageTag }}"
           env:
             - name: PUID
-              value: "1000"
+              value: {{ .Values.puid | quote }}
             - name: PGID
-              value: "1000"
+              value: {{ .Values.pgid | quote }}
             - name: JELLYFIN_PublishedServerUrl
               value: "https://{{ .Values.jellyfin.hostName }}"
             - name: DOCKER_MODS
@@ -120,11 +148,11 @@ spec:
           image: "filebrowser/filebrowser:{{ .Values.filebrowser.imageTag }}"
           env:
             - name: FB_DISABLE_EXEC
-              value: "false"
+              value: "true"
             - name: PUID
-              value: "1000"
+              value: {{ .Values.puid | quote }}
             - name: PGID
-              value: "1000"
+              value: {{ .Values.pgid | quote }}
           ports:
             - containerPort: 80
               protocol: TCP

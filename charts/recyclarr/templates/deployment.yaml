@@ -23,6 +23,11 @@ spec:
       containers:
         - name: recyclarr
           image: "recyclarr/recyclarr:{{ .Chart.AppVersion }}"
+          env:
+            - name: CRON_SCHEDULE
+              value: {{ .Values.cronSchedule | quote }}
+            - name: TZ
+              value: {{ .Values.timeZone | quote }}
           volumeMounts:
             - name: config
               mountPath: /config

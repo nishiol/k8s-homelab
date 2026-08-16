@@ -32,6 +32,8 @@ spec:
       retries: 3
   values:
     existingSecret: recyclarr-api-keys
+    cronSchedule: "0 3 * * *"
+    timeZone: Europe/Moscow
     radarr:
       baseUrl: http://starr.starr:7878
     sonarr:

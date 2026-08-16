@@ -17,6 +17,13 @@ filebrowser:
   imageTag: "v2.63.23"
 certIssuer: prod-issuer
 mediaSize: 200Gi
+puid: 1000
+pgid: 1000
+mediaInitializer:
+  image: busybox:1.37.0
+  directories:
+    - /data/media/movies
+    - /data/media/tv
 proxyUrl: "http://example.com:8080"
 noProxy: ".svc.cluster.local,localhost,127.0.0.1"
 nodeSelector:

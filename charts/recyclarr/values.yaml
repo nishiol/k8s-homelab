@@ -4,4 +4,6 @@ sonarr:
   baseUrl: http://sonarr.example.com
 # Existing Secret must contain radarr_api_key and sonarr_api_key keys.
 existingSecret: ""
+cronSchedule: "@daily"
+timeZone: UTC
 nodeSelector: {}
